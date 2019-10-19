@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../_service/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -7,16 +8,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  // model will store username and password
+  // model will store username and password.  {} makes it an empty object
   model: any = {};
 
-  constructor() { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
   }
 
   login() {
-    console.log(this.model);
+    this.authService.login(this.model).subscribe(next => {
+      console.log('Logged in successfully');
+    },
+    error => {
+      console.log ('Failed to login');
+    });
   }
+
+  loggedIn() {
+
+    // Read the token from localStorage
+    const token = localStorage.getItem('token');
+
+    // Returns true if the variable 'token' has a value and false if the variable is empty
+    return !!token;
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    console.log('Logged out');
+  }
+
 
 }
