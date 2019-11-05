@@ -12,7 +12,7 @@ export class NavComponent implements OnInit {
   // model will store username and password.  {} makes it an empty object
   model: any = {};
 
-  constructor(private authService: AuthService, private alertify: AlertifyService) {}
+  constructor(public authService: AuthService, private alertify: AlertifyService) {}
 
   ngOnInit() {
   }
@@ -28,11 +28,14 @@ export class NavComponent implements OnInit {
 
   loggedIn() {
 
-    // Read the token from localStorage
-    const token = localStorage.getItem('token');
+    // // Read the token from localStorage
+    // const token = localStorage.getItem('token');
 
-    // Returns true if the variable 'token' has a value and false if the variable is empty
-    return !!token;
+    // // Returns true if the variable 'token' has a value and false if the variable is empty
+    // return !!token;
+
+    return this.authService.loggedIn();
+    // console.log('Logged In: ' + this.authService.loggedIn());
   }
 
   logout() {
